@@ -1,8 +1,7 @@
 import emailjs from "@emailjs/browser";
 import moment from "moment/moment";
 
-export const reminder = (name, time , type, userEmail) => {
-
+export const reminder = (name, time, type, userEmail) => {
   const options = {
     method: "POST",
     headers: {
@@ -17,17 +16,21 @@ export const reminder = (name, time , type, userEmail) => {
     }),
   };
   const smsReminder = async () => {
-    await fetch("http://localhost:8011/", options)
-      .then((response) => response.json()).then(()=>sendEmail())
+    await fetch("https://ontaskserver-production.up.railway.app", options)
+      .then((response) => response.json())
+      .then(() => sendEmail())
       .catch((err) => console.error(err));
   };
-    const sendWhatsapp = async () => {
-    await fetch("http://localhost:8011/whatsapp", options)
+  const sendWhatsapp = async () => {
+    await fetch(
+      "https://ontaskserver-production.up.railway.app/whatsapp",
+      options
+    )
       .then((response) => response.json())
       .catch((err) => console.error(err));
   };
 
-  const sendEmail = () => {   
+  const sendEmail = () => {
     if (
       moment(time).format("MMMM Do YYYY, h:mm:ss a") >
       moment().format("MMMM Do YYYY, h:mm:ss a")
